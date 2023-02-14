@@ -9,6 +9,6 @@ export default class User {
         public BornDate:Date,
         public FamilyCode:number,
         public StatusUser:string,
-        public spouseTZ:string
+        public SpouseOrParentTZ:string
         ){}
 }

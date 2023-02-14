@@ -20,7 +20,7 @@ export class FormInformationComponent implements OnInit {
   }
 
   saveChild() {
-    this.child.spouseTZ = this.userService.currentUser.TZ;
+    this.child.SpouseOrParentTZ = this.userService.currentUser.TZ;
     this.child.HMO = this.userService.currentUser.HMO;
     this.child.StatusUser = 'child';
     if (this.children.findIndex(c => c.TZ == this.child.TZ) != -1)

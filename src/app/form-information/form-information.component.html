@@ -61,7 +61,7 @@
     <!-- <p>Spouse TZ</p> -->
     <mat-form-field appearance="fill">
         <mat-label> Spouse TZ</mat-label>
-        <input matInput [(ngModel)]="userService.currentUser.spouseTZ" name="TZs" required pattern="[0-9]*" #tzs="ngModel">
+        <input matInput [(ngModel)]="userService.currentUser.SpouseOrParentTZ" name="TZs" required pattern="[0-9]*" #tzs="ngModel">
     </mat-form-field>
     <div class="errors" *ngIf="tz.touched&&tz.errors&&tz.errors['required']">זהו שדה חובה</div>
     <div class="errors" *ngIf="tz.invalid && (tz.dirty || tz.touched)">לא יתכנו תווים שאינם ספרות בתעודת זהות</div>
