@@ -1,0 +1,106 @@
+<form (ngSubmit)="logIn( )" #myform="ngForm" role="form">
+    <!-- <p>Personal Information</p> -->
+    <mat-form-field appearance="fill">
+        <mat-label>first name</mat-label>
+        <input matInput [(ngModel)]="userService.currentUser.FirstName" name="fname" required pattern="[א-ת a-z A-Z ]*"
+            #Fname="ngModel">
+    </mat-form-field>
+    <div class="errors" *ngIf="Fname.touched&&Fname.errors&&Fname.errors['required']">זהו שדה חובה</div>
+    <div class="errors" *ngIf="Fname.invalid&&(Fname.dirty || Fname.touched)">שם יכול להכיל אותיות בלבד</div>
+    <mat-form-field appearance="fill">
+        <mat-label>last name</mat-label>
+
+        <input matInput [(ngModel)]="userService.currentUser.LastName" name="lname" required pattern="[א-ת a-z A-Z]*"
+            #Lname="ngModel">
+    </mat-form-field>
+    <div class="errors" *ngIf="Lname.touched&&Lname.errors&&Lname.errors['required']">זהו שדה חובה</div>
+    <div class="errors" *ngIf="Lname.invalid && (Lname.dirty || Lname.touched)">שם יכול להכיל אותיות בלבד</div>
+
+    <mat-form-field appearance="fill">
+        <mat-label> Identity</mat-label>
+        <input matInput [(ngModel)]="userService.currentUser.TZ" name="TZ" required pattern="[0-9]*" #tz="ngModel">
+    </mat-form-field>
+    <div class="errors" *ngIf="tz.touched&&tz.errors&&tz.errors['required']">זהו שדה חובה</div>
+    <div class="errors" *ngIf="tz.invalid && (tz.dirty || tz.touched)">לא יתכנו תווים שאינם ספרות בתעודת זהות</div>
+ 
+
+    <!-- <p>Born Date</p> -->
+    <input type="date"[(ngModel)]="userService.currentUser.BornDate" name="BornDate" required >
+
+
+
+    <!-- <p>HMO</p> -->
+    <mat-form-field appearance="fill">
+        <mat-label>Select</mat-label>
+        <mat-select [(ngModel)]="userService.currentUser.HMO" name="hmo" required>
+            <mat-option value="Clalit">Clalit</mat-option>
+            <mat-option value="Meochedet">Meochedet</mat-option>
+            <mat-option value="Macabi">Macabi</mat-option>
+            <mat-option value="Leumit">Leumit</mat-option>
+        </mat-select>
+    </mat-form-field>
+ <!-- <p>Gender</p> -->
+    <mat-form-field appearance="fill">
+        <mat-label>Select</mat-label>
+        <mat-select [(ngModel)]="userService.currentUser.Gender" name="Gender" required>
+            <mat-option value="male">male</mat-option>
+            <mat-option value="fmale">fmale</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <!-- <p>Family stste</p> -->
+    <mat-form-field appearance="fill">
+        <mat-label>Select</mat-label>
+        <mat-select #showSpouseTZ  name="fs" required>
+            <mat-option value='true'>married</mat-option>
+            <mat-option value='false'>single</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+<div *ngIf="showSpouseTZ.value=='true'">
+    <!-- <p>Spouse TZ</p> -->
+    <mat-form-field appearance="fill">
+        <mat-label> Spouse TZ</mat-label>
+        <input matInput [(ngModel)]="userService.currentUser.spouseTZ" name="TZs" required pattern="[0-9]*" #tzs="ngModel">
+    </mat-form-field>
+    <div class="errors" *ngIf="tz.touched&&tz.errors&&tz.errors['required']">זהו שדה חובה</div>
+    <div class="errors" *ngIf="tz.invalid && (tz.dirty || tz.touched)">לא יתכנו תווים שאינם ספרות בתעודת זהות</div>
+</div>
+
+ 
+
+
+    <div *ngIf="showChild">
+         
+        <mat-form-field appearance="fill">
+            <mat-label>first name</mat-label>
+           
+            <input matInput [(ngModel)]="child.FirstName" name="fn" required pattern="[א-ת a-z A-Z ]*"
+                #Fn="ngModel">
+        </mat-form-field>
+    <div class="errors" *ngIf="Fname.touched&&Fname.errors&&Fname.errors['required']">זהו שדה חובה</div>
+    <div class="errors" *ngIf="Fname.invalid&&(Fname.dirty || Fname.touched)">שם יכול להכיל אותיות בלבד</div>
+
+    <mat-form-field appearance="fill">
+        <mat-label> Identity</mat-label>
+        <input matInput [(ngModel)]="child.TZ" name="tz" required pattern="[0-9]*" #Tz="ngModel">
+    </mat-form-field>
+    <div class="errors" *ngIf="tz.touched&&tz.errors&&tz.errors['required']">זהו שדה חובה</div>
+    <div class="errors" *ngIf="tz.invalid && (tz.dirty || tz.touched)">לא יתכנו תווים שאינם ספרות בתעודת זהות</div>
+
+ 
+    <!-- <p>Born Date</p> -->
+    <input type="date"[(ngModel)]="child.BornDate" name="BD" required >
+
+</div>
+
+
+    <input type="button" value=" add child " (click)="addChild()" />
+    <input *ngIf="showChild" type="button" value="save child information " (click)="saveChild()" />
+    <input type="submit" [disabled]="!myform.valid" />
+
+<button mat-raised-button matTooltip="Download all the users to exel document"
+    aria-label="Button that displays a tooltip when focused or hovered over" (click)="downLoadToExel()">
+    export to exel
+</button>
+</form>
