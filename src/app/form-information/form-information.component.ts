@@ -13,46 +13,52 @@ export class FormInformationComponent implements OnInit {
   children: User[] = [];
   usersArr: User[] = [];
   showChild: boolean = false;
+  shoeButtonSaveChild = false;
   constructor(public userService: UserService) { }
 
   ngOnInit(): void {
   }
 
   saveChild() {
-    this.child.spouseTZ=this.userService.currentUser.TZ;
+    this.child.spouseTZ = this.userService.currentUser.TZ;
     this.child.HMO = this.userService.currentUser.HMO;
     this.child.StatusUser = 'child';
     if (this.children.findIndex(c => c.TZ == this.child.TZ) != -1)
       alert("  erorr: ther is a child with same TZ ")
     else {
       this.children.push(this.child);
-      this.userService.addUser(this.child).subscribe((succ) => {
-        console.log("child add");
-        ;
-      },
-        (err) => {
-          alert(" שגיאה בקבלת הנתונים");
+      this.userService.addUser(this.child).subscribe(
+        succ => {
+          if (succ == null)
+            alert("User exists in the system")
+          else console.log("child add");
+        },
+        err => {
           console.log(err)
         })
     }
-    // this.child = new User(0, "", "", "", "", "", new Date(), 0, "", "");
+    this.child = new User(0, "", "", "", "", "", new Date(), 0, "", "");
     this.showChild = false;
+    this.shoeButtonSaveChild = false;
   }
 
   addChild() {
     this.showChild = true;
+    this.shoeButtonSaveChild = true;
   }
 
   logIn() {
 
     this.userService.currentUser.StatusUser = this.userService.currentUser.Gender == "male" ? "man" : "woman";
     this.userService.addUser(this.userService.currentUser).subscribe(
-      succ => console.log("user added"),
+      succ => {
+        if (succ == null)
+          alert("User exists in the system")
+        else console.log("user added")
+      },
       err => console.log("erorr in adding user"));
     console.log(this.userService.currentUser)
-    this.userService.currentUser=new User(0, "", "", "", "", "", new Date(), 0, "", "");
-    
-
+    // this.userService.currentUser=new User(0, "", "", "", "", "", new Date(), 0, "", "");
   }
 
   downLoadToExel() {
@@ -74,7 +80,7 @@ export class FormInformationComponent implements OnInit {
         anchor.click()
       },
       err => {
-        alert("התרחשה שגיאה בקבלת הנתונים")
+        alert("Error receiving data")
         console.log(err)
       })
 

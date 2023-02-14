@@ -31,7 +31,7 @@
 
     <!-- <p>HMO</p> -->
     <mat-form-field appearance="fill">
-        <mat-label>Select</mat-label>
+        <mat-label>HMO</mat-label>
         <mat-select [(ngModel)]="userService.currentUser.HMO" name="hmo" required>
             <mat-option value="Clalit">Clalit</mat-option>
             <mat-option value="Meochedet">Meochedet</mat-option>
@@ -41,7 +41,7 @@
     </mat-form-field>
  <!-- <p>Gender</p> -->
     <mat-form-field appearance="fill">
-        <mat-label>Select</mat-label>
+        <mat-label>Gender</mat-label>
         <mat-select [(ngModel)]="userService.currentUser.Gender" name="Gender" required>
             <mat-option value="male">male</mat-option>
             <mat-option value="fmale">fmale</mat-option>
@@ -50,7 +50,7 @@
 
     <!-- <p>Family stste</p> -->
     <mat-form-field appearance="fill">
-        <mat-label>Select</mat-label>
+        <mat-label>Family state</mat-label>
         <mat-select #showSpouseTZ  name="fs" required>
             <mat-option value='true'>married</mat-option>
             <mat-option value='false'>single</mat-option>
@@ -94,11 +94,13 @@
 
 </div>
 
-
+<p *ngIf="!shoeButtonSaveChild">
     <input type="button" value=" add child " (click)="addChild()" />
+    </p>
+ <p *ngIf="shoeButtonSaveChild">
     <input *ngIf="showChild" type="button" value="save child information " (click)="saveChild()" />
-    <input type="submit" [disabled]="!myform.valid" />
-
+</p>
+ <input type="submit" [disabled]="!myform.valid" />
 <button mat-raised-button matTooltip="Download all the users to exel document"
     aria-label="Button that displays a tooltip when focused or hovered over" (click)="downLoadToExel()">
     export to exel
